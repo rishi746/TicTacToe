@@ -1,36 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic tac toe</title>
-    <link rel="stylesheet" href="2.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StrategiX - Premium Tic Tac Toe</title>
+  <link rel="stylesheet" href="2.css" />
 </head>
 <body>
-    
-    
-
+  <!-- Start Game Dialog -->
+  <div id="startDialog" class="dialog-overlay">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2>Welcome to StrategiX!</h2>
+        <p>Choose your action to begin.</p>
+      </div>
+      <div class="dialog-footer dialog-footer-start">
+        <button id="createGameBtn" class="join-btn">Create Game</button>
+        <button id="joinGameBtn" class="join-btn">Join Game</button>
+      </div>
     </div>
-    <h1>Tic Tac Toe</h1>
-    <div class ="game">
-        <h1 class="Winner ">Winner</h1>
-        <div class ="line"></div>
-        <div class="container">
-        <button class ="box"></button>
-        <button class ="box"></button>
-        <button class ="box"></button>
-        <button class ="box"></button>
-        <button class ="box"></button>
-        <button class ="box"></button>
-        <button class ="box"></button>
-        <button class ="box"></button>
-        <button class ="box"></button>
+  </div>
+
+  <!-- Join/Create Game Dialog -->
+  <div id="joinDialog" class="dialog-overlay hide">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2 id="joinDialogTitle"></h2> <!-- Dynamically set title -->
+        <p id="joinDialogSubtitle"></p> <!-- Dynamically set subtitle -->
+      </div>
+      <div class="dialog-body">
+        <div class="input-group">
+          <label for="roomInput">Room ID</label>
+          <input type="text" id="roomInput" placeholder="e.g., room1, game42, abc123" maxlength="20">
         </div>
+        <div class="input-group">
+          <label for="nameInput">Your Name</label>
+          <input type="text" id="nameInput" placeholder="Enter your name" maxlength="15">
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button id="actionBtn" class="join-btn"></button> <!-- Dynamically set text -->
+      </div>
     </div>
-    <button class="reset">Reset Game</button>
-    <script src="2.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-<script src="client.js"></script>
+  </div>
 
+  <!-- Room Full Dialog -->
+  <div id="roomFullDialog" class="dialog-overlay hide">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2>Room Full</h2>
+        <p>This room already has 2 players. Try another room.</p>
+      </div>
+      <div class="dialog-footer">
+        <button id="tryAgainBtn" class="join-btn">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invalid Room Dialog -->
+  <div id="invalidRoomDialog" class="dialog-overlay hide">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2 id="invalidRoomTitle"></h2>
+        <p id="invalidRoomMessage"></p>
+      </div>
+      <div class="dialog-footer">
+        <button id="invalidRoomOkBtn" class="join-btn">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Game Container -->
+  <div class="main-container hide" id="gameContainer">
+    <!-- Scoreboard -->
+    <div class="scoreboard">
+      <div class="scoreboard-header">
+        <h3>Scoreboard</h3>
+      </div>
+      <div class="player-info">
+        <div class="player you">
+          <div class="player-symbol" id="yourSymbol">X</div>
+          <div class="player-details">
+            <div class="player-name" id="yourName">You</div>
+            <div class="score" id="yourScore">0</div>
+          </div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="player opponent">
+          <div class="player-symbol" id="opponentSymbol">O</div>
+          <div class="player-details">
+            <div class="player-name" id="opponentName">Opponent</div>
+            <div class="score" id="opponentScore">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Section -->
+    <div class="game-section">
+      <h1 class="title">StrategiX</h1>
+
+      <div class="game">
+        <h2 class="Winner hide">Winner</h2>
+        <div class="countdown-bar hide"></div>
+
+        <div class="container">
+          <div class="line hide"></div>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+        </div>
+
+        <p class="turn-indicator hide">Your turn</p>
+      </div>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="chat-section">
+      <div class="chat-header">
+        <span>Game Chat</span>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="message system">Welcome! Start chatting once both players join.</div>
+      </div>
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." maxlength="200" disabled>
+        <button class="send-btn" id="sendBtn" disabled>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
 </body>
 </html>
