@@ -2,7 +2,7 @@
 
 A real-time 2-player **Tic Tac Toe** game built using **Node.js**, **Socket.io**, and vanilla **JavaScript**. This app allows two players to connect and play online in sync — complete with animated winning lines and clean UI.
 
-![Tic Tac Toe Screenshot](https://upload.wikimedia.org/wikipedia/commons/3/32/Tic-tac-toe.svg)
+![Game Screenshot](./public/tictactoe.png)
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
