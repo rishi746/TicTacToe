@@ -48,14 +48,14 @@ A real-time 2-player **Tic Tac Toe** game built using **Node.js**, **Socket.io**
 
 ## 📁 Project Structure
 
-Directory structure:
-└── rishi746-tictactoe/
-    ├── package.json
-    ├── server.js
-    └── public/
-        ├── 2.css
-        ├── client.js
-        └── index.html
+Directory structure:<br/>
+└── rishi746-tictactoe/<br/>
+    ├── package.json<br/>
+    ├── server.js<br/>
+    └── public/<br/>
+        ├── 2.css<br/>
+        ├── client.js<br/>
+        └── index.html<br/>
 
 ---
 
