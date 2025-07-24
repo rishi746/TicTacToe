@@ -15,11 +15,13 @@ io.on("connection", (socket) => {
 
   socket.on("join-room", (data) => {
     const { roomId, playerName, type } = data; // Added 'type' (create/join)
+    console.log(`[Server] Join Room Request: Room ID: ${roomId}, Player Name: ${playerName}, Type: ${type}`);
     
     // --- Room Creation/Joining Logic ---
     if (type === 'create') {
       if (rooms[roomId]) {
         // Room already exists, cannot create
+        console.log(`[Server] Room ${roomId} already exists. Emitting 'room-already-exists'.`);
         socket.emit("room-already-exists");
         return;
       }
@@ -30,9 +32,11 @@ io.on("connection", (socket) => {
         playerNames: {},
         chatHistory: []
       };
+      console.log(`[Server] Room ${roomId} created successfully.`);
     } else if (type === 'join') {
       if (!rooms[roomId]) {
         // Room does not exist, cannot join
+        console.log(`[Server] Room ${roomId} not found. Emitting 'room-not-found'.`);
         socket.emit("room-not-found");
         return;
       }
@@ -41,6 +45,7 @@ io.on("connection", (socket) => {
     const room = rooms[roomId];
 
     if (room.players.length >= 2) {
+      console.log(`[Server] Room ${roomId} is full. Emitting 'room-full'.`);
       socket.emit("room-full");
       return;
     }
@@ -54,6 +59,8 @@ io.on("connection", (socket) => {
     socket.roomId = roomId;
     socket.symbol = symbol;
     socket.playerName = room.playerNames[socket.id];
+
+    console.log(`[Server] Player ${socket.playerName} (${socket.symbol}) joined room ${roomId}. Total players: ${room.players.length}`);
 
     socket.emit("player-assigned", { 
       symbol, 
@@ -95,24 +102,35 @@ io.on("connection", (socket) => {
       });
       
       io.to(roomId).emit("chat-message", readyMessage);
+      console.log(`[Server] Room ${roomId} now has 2 players. Game starting.`);
     }
 
     // Handle game moves
     socket.on("make-move", (data) => {
       const room = rooms[socket.roomId];
-      if (!room) return;
+      if (!room) {
+        console.log(`[Server] Error: Room ${socket.roomId} not found for move.`);
+        return;
+      }
       room.turn = room.turn === "X" ? "O" : "X";
+      console.log(`[Server] Move made in room ${socket.roomId} by ${data.symbol} at index ${data.index}. New turn: ${room.turn}`);
       socket.to(socket.roomId).emit("move-made", data);
     });
 
     // Handle chat messages
     socket.on("chat-message", (messageData) => {
       const room = rooms[socket.roomId];
-      if (!room) return;
+      if (!room) {
+        console.log(`[Server] Error: Room ${socket.roomId} not found for chat message.`);
+        return;
+      }
 
       // Basic message filtering
       const cleanMessage = messageData.message.replace(/[<>]/g, '').trim();
-      if (!cleanMessage) return;
+      if (!cleanMessage) {
+        console.log(`[Server] Empty chat message from ${socket.playerName}.`);
+        return;
+      }
 
       const chatMessage = {
         type: 'player',
@@ -129,7 +147,7 @@ io.on("connection", (socket) => {
       if (room.chatHistory.length > 50) {
         room.chatHistory = room.chatHistory.slice(-50);
       }
-
+      console.log(`[Server] Chat message from ${socket.playerName} in room ${socket.roomId}: "${cleanMessage}"`);
       // Send to all players in room
       io.to(socket.roomId).emit("chat-message", chatMessage);
     });
@@ -145,6 +163,7 @@ io.on("connection", (socket) => {
           timestamp: Date.now()
         };
         rooms[roomId].chatHistory.push(resetMessage);
+        console.log(`[Server] Game reset in room ${roomId}.`);
         io.to(roomId).emit("reset-board");
         io.to(roomId).emit("chat-message", resetMessage);
       }
@@ -173,12 +192,13 @@ io.on("connection", (socket) => {
           rooms[roomId].chatHistory.push(leaveMessage);
           socket.to(roomId).emit("player-left");
           socket.to(roomId).emit("chat-message", leaveMessage);
+          console.log(`[Server] Player ${playerName} left room ${roomId}. Remaining players: ${rooms[roomId].players.length}`);
         }
 
         // Delete room if empty
         if (rooms[roomId].players.length === 0) {
           delete rooms[roomId];
-          console.log(`Room ${roomId} deleted - no players remaining`);
+          console.log(`[Server] Room ${roomId} deleted - no players remaining`);
         }
       }
     });
@@ -190,12 +210,14 @@ setInterval(() => {
   Object.keys(rooms).forEach(roomId => {
     if (rooms[roomId].players.length === 0) {
       delete rooms[roomId];
-      console.log(`Cleaned up empty room: ${roomId}`);
+      console.log(`[Server] Cleaned up empty room: ${roomId}`);
     }
   });
 }, 300000); // Every 5 minutes
 
-server.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+// Use process.env.PORT for deployment environments like Render
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
   console.log("StrategiX - Premium Tic Tac Toe Server Started");
 });
