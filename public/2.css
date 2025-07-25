@@ -13,7 +13,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -60,6 +60,7 @@ body::after {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 1rem;
 }
 
 .dialog-content {
@@ -70,7 +71,7 @@ body::after {
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
   max-width: 400px;
-  width: 90%;
+  width: 100%;
   animation: dialogSlide 0.3s ease-out;
 }
 
@@ -168,7 +169,33 @@ body::after {
   padding: 1rem;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+/* Desktop Layout - Horizontal */
+@media (min-width: 1201px) {
+  .main-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+/* Tablet and Mobile Layout - Vertical */
+@media (max-width: 1200px) {
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    align-items: flex-start;
+  }
+  
+  .main-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+  }
 }
 
 /* Scoreboard */
@@ -181,6 +208,14 @@ body::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+  .scoreboard {
+    width: 100%;
+    max-width: 500px;
+    order: 1; /* First in vertical layout */
+  }
 }
 
 .scoreboard-header {
@@ -203,6 +238,22 @@ body::after {
   gap: 1rem;
 }
 
+@media (max-width: 1200px) {
+  .player-info {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .player-info {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
+
 .player {
   display: flex;
   align-items: center;
@@ -211,6 +262,21 @@ body::after {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 1200px) {
+  .player {
+    flex: 1;
+    justify-content: center;
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .player {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
 .player.you {
@@ -258,12 +324,34 @@ body::after {
   font-size: 1.1rem;
 }
 
+@media (max-width: 1200px) {
+  .vs {
+    order: 2;
+    margin: 0 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .vs {
+    order: 0;
+    margin: 0;
+  }
+}
+
 .game-section {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 500px;
+}
+
+@media (max-width: 1200px) {
+  .game-section {
+    width: 100%;
+    max-width: 500px;
+    order: 2; /* Second in vertical layout */
+  }
 }
 
 .title {
@@ -278,6 +366,21 @@ body::after {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
 }
 
 .game {
@@ -309,13 +412,36 @@ body::after {
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+@media (max-width: 768px) {
+  .container {
+    width: 280px;
+    height: 280px;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 260px;
+    height: 260px;
+    gap: 3px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    width: 240px;
+    height: 240px;
+  }
+}
+
 .box {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
   border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   font-size: 2.5rem;
   color: #fff;
-  cursor: default; /* Default cursor for boxes */
+  cursor: default;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -327,19 +453,30 @@ body::after {
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .box {
+    font-size: 2rem;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .box {
+    font-size: 1.8rem;
+  }
+}
+
 /* Dynamic Cursors for X and O */
 .box.cursor-x:hover {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="%234ecdc4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'), pointer;
 }
 
 .box.cursor-o:hover {
-  /* Adjusted SVG for a smaller, more refined 'O' cursor */
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ff6b6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle></svg>'), pointer;
 }
 
 .box:disabled {
-  /* Custom cursor for disabled boxes (opponent's turn or game over) */
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>'), not-allowed; /* Changed to a simple cross with grey color */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>'), not-allowed;
   opacity: 0.7;
 }
 
@@ -358,6 +495,14 @@ body::after {
   align-items: center;
   justify-content: center;
   font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .Winner {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    min-height: 50px;
+  }
 }
 
 .line {
@@ -395,6 +540,13 @@ body::after {
   font-weight: 500;
 }
 
+@media (max-width: 768px) {
+  .turn-indicator {
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
 .hide {
   display: none !important;
 }
@@ -413,6 +565,27 @@ body::after {
   overflow: hidden;
 }
 
+@media (max-width: 1200px) {
+  .chat-section {
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    order: 3; /* Third in vertical layout */
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-section {
+    height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-section {
+    height: 300px;
+  }
+}
+
 .chat-header {
   padding: 1rem;
   background: rgba(255, 255, 255, 0.1);
@@ -423,6 +596,13 @@ body::after {
   font-size: 1.1rem;
 }
 
+@media (max-width: 768px) {
+  .chat-header {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+}
+
 .chat-messages {
   flex: 1;
   padding: 1rem;
@@ -430,6 +610,12 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .chat-messages {
+    padding: 0.8rem;
+  }
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -454,6 +640,13 @@ body::after {
   font-size: 0.85rem;
   line-height: 1.4;
   animation: messageSlide 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+  .message {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
 }
 
 @keyframes messageSlide {
@@ -490,12 +683,24 @@ body::after {
   border: 1px solid rgba(255, 193, 7, 0.3);
 }
 
+@media (max-width: 768px) {
+  .message.system {
+    font-size: 0.7rem;
+  }
+}
+
 .chat-input-container {
   padding: 1rem;
   background: rgba(255, 255, 255, 0.05);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .chat-input-container {
+    padding: 0.8rem;
+  }
 }
 
 .chat-input {
@@ -508,6 +713,13 @@ body::after {
   font-size: 0.85rem;
   outline: none;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .chat-input {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
 }
 
 .chat-input::placeholder {
@@ -532,6 +744,13 @@ body::after {
   box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
 }
 
+@media (max-width: 768px) {
+  .send-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
 .send-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(78, 205, 196, 0.4);
@@ -543,61 +762,11 @@ body::after {
   transform: none;
 }
 
-@media (max-width: 1200px) {
-  .main-container {
-    flex-direction: column;
-    height: auto;
-    max-height: 100vh;
-    overflow-y: auto;
-    gap: 1rem;
-    padding: 0.5rem;
-  }
-  
-  .scoreboard {
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  .player-info {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
-  .vs {
-    order: 2;
-  }
-  
-  .chat-section {
-    width: 100%;
-    max-width: 500px;
-    height: 300px;
-  }
-  
-  .game-section {
-    max-width: 500px;
-  }
-  
-  .container {
-    width: 280px;
-    height: 280px;
-  }
-  
-  .title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-}
-
-/* Responsive adjustments for smaller screens */
+/* Dialog responsive adjustments */
 @media (max-width: 768px) {
-  .main-container {
-    padding: 0.5rem;
-    gap: 0.8rem;
-  }
-
   .dialog-content {
     padding: 1.5rem;
+    margin: 1rem;
   }
 
   .dialog-header h2 {
@@ -618,72 +787,9 @@ body::after {
     font-size: 0.9rem;
   }
 
-  .scoreboard {
-    width: 95%; /* Adjust width for smaller screens */
-    margin-bottom: 0.8rem;
-  }
-
-  .player-info {
-    flex-direction: column; /* Stack player info vertically */
-    gap: 0.5rem;
-  }
-
-  .player {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .game-section {
-    width: 95%; /* Adjust width for smaller screens */
-    margin-bottom: 0.8rem;
-  }
-
-  .title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .container {
-    width: 260px; /* Slightly smaller game board */
-    height: 260px;
-    gap: 4px;
-  }
-
-  .box {
-    font-size: 2rem;
-  }
-
-  .chat-section {
-    width: 95%; /* Adjust width for smaller screens */
-    height: 250px; /* Adjust height for chat */
-  }
-
-  .chat-header {
-    font-size: 1rem;
-    padding: 0.8rem;
-  }
-
-  .chat-messages {
-    padding: 0.8rem;
-  }
-
-  .message {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.6rem;
-  }
-
-  .chat-input-container {
-    padding: 0.8rem;
-  }
-
-  .chat-input {
-    padding: 0.5rem;
-    font-size: 0.8rem;
-  }
-
-  .send-btn {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.8rem;
+  .dialog-footer-start {
+    flex-direction: column;
+    gap: 0.8rem;
   }
 }
 
@@ -709,18 +815,30 @@ body::after {
     padding: 0.6rem 1.2rem;
     font-size: 0.85rem;
   }
+}
 
-  .container {
-    width: 220px; /* Even smaller game board for very small screens */
-    height: 220px;
-    gap: 3px;
+/* Landscape orientation fixes for mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .main-container {
+    padding: 0.5rem;
+    gap: 0.8rem;
   }
-
-  .box {
-    font-size: 1.8rem;
-  }
-
+  
   .title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .container {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .chat-section {
+    height: 200px;
+  }
+  
+  .game {
+    padding: 1rem;
   }
 }
