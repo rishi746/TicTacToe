@@ -17,6 +17,134 @@
       <div class="dialog-footer dialog-footer-start">
         <button id="createGameBtn" class="join-btn">Create Game</button>
         <button id="joinGameBtn" class="join-btn">Join Game</button>
+        <button id="tournamentBtn" class="join-btn tournament-btn">Tournament</button>
+        <button id="leaderboardBtn" class="join-btn leaderboard-btn">Leaderboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tournament Mode Selection Dialog -->
+  <div id="tournamentModeDialog" class="dialog-overlay hide">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2>Tournament Mode</h2>
+        <p>Select tournament action.</p>
+      </div>
+      <div class="dialog-footer dialog-footer-start">
+        <button id="createTournamentBtn" class="join-btn">Create Tournament</button>
+        <button id="joinTournamentBtn" class="join-btn">Join Tournament</button>
+        <button id="backFromTournamentBtn" class="join-btn secondary-btn">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Tournament Dialog -->
+  <div id="createTournamentDialog" class="dialog-overlay hide">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2>Create Tournament</h2>
+        <p>Set up your tournament parameters.</p>
+      </div>
+      <div class="dialog-body">
+        <div class="input-group">
+          <label for="tournamentIdInput">Tournament ID</label>
+          <input type="text" id="tournamentIdInput" placeholder="e.g., spring2024, champions" maxlength="20">
+        </div>
+        <div class="input-group">
+          <label for="tournamentNameInput">Your Name</label>
+          <input type="text" id="tournamentNameInput" placeholder="Enter your name" maxlength="15">
+        </div>
+        <div class="input-group">
+          <label for="tournamentTypeSelect">Tournament Type</label>
+          <select id="tournamentTypeSelect" class="tournament-select">
+            <option value="bo3">Best of 3</option>
+            <option value="bo5">Best of 5</option>
+            <option value="bo7">Best of 7</option>
+          </select>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button id="createTournamentConfirmBtn" class="join-btn">Create Tournament</button>
+        <button id="backFromCreateTournamentBtn" class="join-btn secondary-btn">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Join Tournament Dialog -->
+  <div id="joinTournamentDialog" class="dialog-overlay hide">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2>Join Tournament</h2>
+        <p>Enter tournament details to join.</p>
+      </div>
+      <div class="dialog-body">
+        <div class="input-group">
+          <label for="joinTournamentIdInput">Tournament ID</label>
+          <input type="text" id="joinTournamentIdInput" placeholder="Enter tournament ID" maxlength="20">
+        </div>
+        <div class="input-group">
+          <label for="joinTournamentNameInput">Your Name</label>
+          <input type="text" id="joinTournamentNameInput" placeholder="Enter your name" maxlength="15">
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button id="joinTournamentConfirmBtn" class="join-btn">Join Tournament</button>
+        <button id="backFromJoinTournamentBtn" class="join-btn secondary-btn">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tournament Lobby Dialog -->
+  <div id="tournamentLobbyDialog" class="dialog-overlay hide">
+    <div class="dialog-content tournament-lobby">
+      <div class="dialog-header">
+        <h2 id="tournamentLobbyTitle">Tournament Lobby</h2>
+        <p id="tournamentLobbySubtitle">Waiting for players...</p>
+      </div>
+      <div class="tournament-info">
+        <div class="tournament-details">
+          <span id="tournamentType">Best of 3</span>
+          <span id="tournamentStatus">Waiting</span>
+        </div>
+        <div class="players-list" id="tournamentPlayersList">
+          <!-- Players will be populated here -->
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button id="startTournamentBtn" class="join-btn hide">Start Tournament</button>
+        <button id="leaveTournamentBtn" class="join-btn secondary-btn">Leave Tournament</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tournament Bracket Dialog -->
+  <div id="tournamentBracketDialog" class="dialog-overlay hide">
+    <div class="dialog-content tournament-bracket">
+      <div class="dialog-header">
+        <h2>Tournament Bracket</h2>
+        <p id="tournamentRoundInfo">Round 1</p>
+      </div>
+      <div class="bracket-container" id="bracketContainer">
+        <!-- Bracket will be generated here -->
+      </div>
+      <div class="dialog-footer">
+        <button id="closeBracketBtn" class="join-btn secondary-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaderboard Dialog -->
+  <div id="leaderboardDialog" class="dialog-overlay hide">
+    <div class="dialog-content leaderboard-content">
+      <div class="dialog-header">
+        <h2>Seasonal Leaderboard</h2>
+        <p>Top players this season</p>
+      </div>
+      <div class="leaderboard-container" id="leaderboardContainer">
+        <!-- Leaderboard will be populated here -->
+      </div>
+      <div class="dialog-footer">
+        <button id="closeLeaderboardBtn" class="join-btn secondary-btn">Close</button>
       </div>
     </div>
   </div>
@@ -25,8 +153,8 @@
   <div id="joinDialog" class="dialog-overlay hide">
     <div class="dialog-content">
       <div class="dialog-header">
-        <h2 id="joinDialogTitle"></h2> <!-- Dynamically set title -->
-        <p id="joinDialogSubtitle"></p> <!-- Dynamically set subtitle -->
+        <h2 id="joinDialogTitle"></h2>
+        <p id="joinDialogSubtitle"></p>
       </div>
       <div class="dialog-body">
         <div class="input-group">
@@ -39,7 +167,8 @@
         </div>
       </div>
       <div class="dialog-footer">
-        <button id="actionBtn" class="join-btn"></button> <!-- Dynamically set text -->
+        <button id="actionBtn" class="join-btn"></button>
+        <button id="backFromJoinBtn" class="join-btn secondary-btn">Back</button>
       </div>
     </div>
   </div>
@@ -70,8 +199,32 @@
     </div>
   </div>
 
+  <!-- Tournament Error Dialog -->
+  <div id="tournamentErrorDialog" class="dialog-overlay hide">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2>Tournament Error</h2>
+        <p id="tournamentErrorMessage"></p>
+      </div>
+      <div class="dialog-footer">
+        <button id="tournamentErrorOkBtn" class="join-btn">OK</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Game Container -->
   <div class="main-container hide" id="gameContainer">
+    <!-- Tournament Info Panel (only visible during tournament matches) -->
+    <div class="tournament-info-panel hide" id="tournamentInfoPanel">
+      <div class="tournament-match-info">
+        <h3>Tournament Match</h3>
+        <p id="tournamentMatchType">Best of 3 - Game 1</p>
+        <div class="match-score">
+          <span id="playerMatchScore">0</span> - <span id="opponentMatchScore">0</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Scoreboard -->
     <div class="scoreboard">
       <div class="scoreboard-header">

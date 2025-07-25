@@ -7,7 +7,7 @@
 
 /* Custom Cursor */
 body {
-  cursor: pointer; /* Simple pointer */
+  cursor: pointer;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 20%, #16213e 40%, #0f3460 70%, #533483 100%);
   min-height: 100vh;
   display: flex;
@@ -75,6 +75,23 @@ body::after {
   animation: dialogSlide 0.3s ease-out;
 }
 
+/* Tournament-specific dialog sizes */
+.dialog-content.tournament-lobby {
+  max-width: 500px;
+}
+
+.dialog-content.tournament-bracket {
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.dialog-content.leaderboard-content {
+  max-width: 600px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
 @keyframes dialogSlide {
   from {
     opacity: 0;
@@ -110,7 +127,7 @@ body::after {
   font-weight: 500;
 }
 
-.input-group input {
+.input-group input, .tournament-select {
   width: 100%;
   padding: 0.8rem;
   background: rgba(255, 255, 255, 0.1);
@@ -122,11 +139,20 @@ body::after {
   transition: all 0.3s ease;
 }
 
+.tournament-select {
+  cursor: pointer;
+}
+
+.tournament-select option {
+  background: #1a1a2e;
+  color: #fff;
+}
+
 .input-group input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.input-group input:focus {
+.input-group input:focus, .tournament-select:focus {
   border-color: #4ecdc4;
   box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.2);
 }
@@ -140,6 +166,7 @@ body::after {
   display: flex;
   justify-content: space-around;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .join-btn {
@@ -160,6 +187,193 @@ body::after {
   box-shadow: 0 6px 16px rgba(78, 205, 196, 0.4);
 }
 
+.join-btn.secondary-btn {
+  background: linear-gradient(135deg, #666, #555);
+  box-shadow: 0 4px 12px rgba(102, 102, 102, 0.3);
+}
+
+.join-btn.secondary-btn:hover {
+  box-shadow: 0 6px 16px rgba(102, 102, 102, 0.4);
+}
+
+.join-btn.tournament-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+}
+
+.join-btn.leaderboard-btn {
+  background: linear-gradient(135deg, #ffa500, #ff8c00);
+}
+
+/* Tournament Info Panel */
+.tournament-info-panel {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(255, 107, 107, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  text-align: center;
+}
+
+.tournament-match-info h3 {
+  color: #ff6b6b;
+  margin-bottom: 0.5rem;
+}
+
+.tournament-match-info p {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.match-score {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4ecdc4;
+}
+
+/* Tournament Lobby Styles */
+.tournament-info {
+  margin: 1rem 0;
+}
+
+.tournament-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.tournament-details span {
+  color: #4ecdc4;
+  font-weight: 600;
+}
+
+.players-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.player-item .player-name {
+  color: #fff;
+  font-weight: 500;
+}
+
+.player-item .player-status {
+  margin-left: auto;
+  color: #4ecdc4;
+  font-size: 0.8rem;
+}
+
+/* Bracket Styles */
+.bracket-container {
+  max-height: 60vh;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.bracket-round {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.bracket-round h3 {
+  color: #4ecdc4;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.bracket-match {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bracket-match.completed {
+  border-color: rgba(78, 205, 196, 0.5);
+}
+
+.bracket-players {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bracket-player {
+  color: #fff;
+  font-weight: 500;
+}
+
+.bracket-player.winner {
+  color: #4ecdc4;
+  font-weight: bold;
+}
+
+.bracket-vs {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+}
+
+.bracket-score {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: #ffa500;
+  font-size: 0.9rem;
+}
+
+/* Leaderboard Styles */
+.leaderboard-container {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-table th {
+  color: #4ecdc4;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-table td {
+  color: #fff;
+}
+
+.leaderboard-rank {
+  font-weight: bold;
+  color: #ffa500;
+}
+
+.leaderboard-rank.top-3 {
+  color: #ff6b6b;
+}
+
 .main-container {
   display: flex;
   gap: 1.5rem;
@@ -169,6 +383,7 @@ body::after {
   padding: 1rem;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 /* Desktop Layout - Horizontal */
@@ -176,6 +391,14 @@ body::after {
   .main-container {
     flex-direction: row;
     flex-wrap: nowrap;
+  }
+  
+  .tournament-info-panel {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
   }
 }
 
@@ -196,6 +419,10 @@ body::after {
     justify-content: flex-start;
     align-items: center;
   }
+  
+  .tournament-info-panel {
+    order: 0;
+  }
 }
 
 /* Scoreboard */
@@ -214,7 +441,7 @@ body::after {
   .scoreboard {
     width: 100%;
     max-width: 500px;
-    order: 1; /* First in vertical layout */
+    order: 1;
   }
 }
 
@@ -350,7 +577,7 @@ body::after {
   .game-section {
     width: 100%;
     max-width: 500px;
-    order: 2; /* Second in vertical layout */
+    order: 2;
   }
 }
 
@@ -570,7 +797,7 @@ body::after {
     width: 100%;
     max-width: 500px;
     height: 400px;
-    order: 3; /* Third in vertical layout */
+    order: 3;
   }
 }
 
@@ -777,7 +1004,7 @@ body::after {
     font-size: 0.9rem;
   }
 
-  .input-group input {
+  .input-group input, .tournament-select {
     padding: 0.7rem;
     font-size: 0.9rem;
   }
@@ -806,7 +1033,7 @@ body::after {
     font-size: 0.8rem;
   }
 
-  .input-group input {
+  .input-group input, .tournament-select {
     padding: 0.6rem;
     font-size: 0.85rem;
   }
